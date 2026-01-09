@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <title>Electron Demo Counter</title>
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
   <div class="card">
     <div class="toolbar">
@@ -15,6 +17,14 @@
       <button class="decrement" id="decrement">-1</button>
       <button id="increment">+1</button>
       <button class="reset" id="reset">Reset</button>
+    </div>
+    <div class="hints">
+      <div class="hint-content">
+        <p> Keyboard Shortcuts:</p>
+        <p><kbd>↑</kbd> or <kbd>+</kbd> Increment</p>
+        <p><kbd>↓</kbd> or <kbd>-</kbd> Decrement</p>
+        <p><kbd>R</kbd> Reset</p>
+      </div>
     </div>
   </div>
 
@@ -83,4 +93,5 @@
     });
   </script>
 </body>
+
 </html>
