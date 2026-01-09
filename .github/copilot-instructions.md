@@ -6,7 +6,8 @@ ElectroDemo is a minimal Electron desktop application demonstrating basic Electr
 ## Architecture & Key Files
 
 ### Entry Point
-- [scripts/main.js](../../scripts/main.js): Electron main process (set via `package.json#main`). Creates an 800x600 BrowserWindow on app ready, loads [index.html](../../index.html). Uses nodeIntegration: true for backward compatibility (migrate to preload + IPC for production).
+- [scripts/main.js](../../scripts/main.js): Electron main process (set via `package.json#main`). Creates an 800x600 BrowserWindow on app ready, loads [index.html](../../index.html), and initializes menu via [scripts/menu.js](../../scripts/menu.js). Uses nodeIntegration: true for backward compatibility (migrate to preload + IPC for production).
+- [scripts/menu.js](../../scripts/menu.js): Builds application menu (File, Edit, View, Help) with platform-specific behavior. Export `buildMenu(win)` function; called from main.js after window creation.
 - [index.html](../../index.html): Renderer UI with counter (increment/decrement/reset) and light/dark toggle; pulls styles from [style.css](../../style.css).
 - [style.css](../../style.css): Theming via CSS variables; supports light/dark modes.
 - [scripts/counter.js](../../scripts/counter.js): Renderer logic for counter, keyboard shortcuts, and theme persistence.
@@ -33,11 +34,12 @@ See [package.json](../../package.json) `build` section:
    - `electron`: Desktop framework runtime
    - `electron-builder`: Packaging tool (dev only)
 
-3. **UI features present**: Counter UI and theme toggle live in renderer; styles in style.css. No IPC or preload yet.
+3. **UI and menu features present**: Counter UI, theme toggle, and application menu live in the project. Menu pattern: modular `buildMenu(win)` in `scripts/menu.js`, called from `main.js`. No IPC or preload yet.
 
 ## When Modifying
 
 - **Adding features**: Keep main.js minimal; use preload + IPC for renderer-main communication when adding main/renderer interactions.
+- **Menu changes**: Edit scripts/menu.js template; custom menu items can invoke app.quit(), shell.openExternal(), or use webContents.send() to notify the renderer.
 - **UI changes**: Edit index.html and style.css; renderer logic lives in scripts/counter.js.
 - **Packaging**: Modify build config in package.json for new platforms/signing.
 - **Security**: Never enable nodeIntegration in production; use context isolation + preload scripts.

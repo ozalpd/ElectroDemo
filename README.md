@@ -12,6 +12,7 @@ A minimal Electron desktop app created for learning purposes. This project shows
 - Counter with +/-/reset actions.
 - Light/dark theme toggle with persistence between launches.
 - Keyboard shortcuts: ↑ or + to increment, ↓ or - to decrement, R to reset.
+- Application menu with File, Edit, View, and Help menus (File → Quit Electro Demo, Help → About).
 - Styles split into [style.css](style.css) for easy tweaking.
 
 ## Usage
@@ -40,7 +41,8 @@ npm run dist
 - On Windows: outputs an NSIS installer inside `dist/`
 
 ## App Structure
-- [scripts/main.js](scripts/main.js): Electron main process. Creates an `800x600` `BrowserWindow` and loads [index.html](index.html).
+- [scripts/main.js](scripts/main.js): Electron main process. Creates an `800x600` `BrowserWindow` and loads [index.html](index.html); initializes the app menu.
+- [scripts/menu.js](scripts/menu.js): Builds and sets the application menu (File, Edit, View, Help with platform-specific behavior).
 - [index.html](index.html): Renderer content with counter UI and theme toggle.
 - [style.css](style.css): Styling for counter and themes.
 - [scripts/counter.js](scripts/counter.js): Renderer logic (counter, keyboard shortcuts, theme persistence).
@@ -51,7 +53,7 @@ npm run dist
 - Cross-platform: electron-builder targets are configured for macOS (`dmg`) and Windows (`nsis`). Adjust as needed in `package.json`.
 
 ## Next Steps (Ideas to Learn)
-- Add a custom menu in the main process.
+- Add custom menu items that send events to the renderer (e.g., "Reset Counter" via IPC).
 - Introduce a `preload.js` and migrate to IPC for main/renderer communication.
 - Save/load a file via the main process (Node.js `fs`).
-- Persist the theme or counter value between runs.
+- Add app window state persistence (position, size).
