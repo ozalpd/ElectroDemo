@@ -1,3 +1,6 @@
+// Require electron IPC at the top level
+const { ipcRenderer } = require('electron');
+
 // Basic counter logic in the renderer
 const countEl = document.getElementById('count');
 let value = 0;
@@ -60,3 +63,28 @@ themeToggle.addEventListener('click', () => {
   localStorage.setItem(THEME_KEY, isLight ? 'light' : 'dark');
   updateThemeLabel();
 });
+
+// IPC listeners for menu actions
+ipcRenderer.on('increment-counter', () => {
+  value += 1;
+  update();
+});
+
+ipcRenderer.on('decrement-counter', () => {
+  value -= 1;
+  update();
+});
+
+ipcRenderer.on('reset-counter', () => {
+  value = 0;
+  update();
+});
+
+ipcRenderer.on('toggle-theme', () => {
+  document.body.classList.toggle('light');
+  const isLight = document.body.classList.contains('light');
+  localStorage.setItem(THEME_KEY, isLight ? 'light' : 'dark');
+  updateThemeLabel();
+});
+
+console.log('IPC listeners registered successfully');

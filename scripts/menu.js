@@ -63,6 +63,27 @@ function buildMenu(win) {
         ...(isMac
           ? [{ role: 'pasteAndMatchStyle' }, { role: 'selectAll' }]
           : [{ role: 'delete' }, { role: 'selectAll' }]),
+        { type: 'separator' },
+        {
+          label: 'Increment Counter',
+          accelerator: 'CmdOrCtrl+Shift+I',
+          click: () => win.webContents.send('increment-counter'),
+        },
+        {
+          label: 'Decrement Counter',
+          accelerator: 'CmdOrCtrl+Shift+D',
+          click: () => win.webContents.send('decrement-counter'),
+        },
+        {
+          label: 'Reset Counter',
+          accelerator: 'CmdOrCtrl+Shift+R',
+          click: () => win.webContents.send('reset-counter'),
+        },
+        {
+          label: 'Toggle Theme',
+          accelerator: 'CmdOrCtrl+Shift+T',
+          click: () => win.webContents.send('toggle-theme'),
+        },
       ],
     },
     {
