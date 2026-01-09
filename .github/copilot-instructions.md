@@ -11,6 +11,7 @@ ElectroDemo is a minimal Electron desktop application demonstrating basic Electr
 - [index.html](../../index.html): Renderer UI with counter (increment/decrement/reset) and light/dark toggle; pulls styles from [style.css](../../style.css).
 - [style.css](../../style.css): Theming via CSS variables; supports light/dark modes.
 - [scripts/counter.js](../../scripts/counter.js): Renderer logic for counter, keyboard shortcuts, and theme persistence.
+ - [scripts/counter.js](../../scripts/counter.js): Renderer logic for counter, keyboard shortcuts, theme persistence, and IPC listeners for menu actions.
 
 ## Developer Workflows
 
@@ -34,7 +35,8 @@ See [package.json](../../package.json) `build` section:
    - `electron`: Desktop framework runtime
    - `electron-builder`: Packaging tool (dev only)
 
-3. **UI and menu features present**: Counter UI, theme toggle, and application menu live in the project. Menu pattern: modular `buildMenu(win)` in `scripts/menu.js`, called from `main.js`. No IPC or preload yet.
+3. **UI and menu features present**: Counter UI, theme toggle, and application menu live in the project. Menu pattern: modular `buildMenu(win)` in `scripts/menu.js`, called from `main.js`. IPC is used for menu-to-renderer actions; no preload yet.
+4. **Window state persistence**: Window size/position/maximized state are saved to `app.getPath('userData')/window-state.json` and restored on launch (see scripts/main.js).
 
 ## When Modifying
 

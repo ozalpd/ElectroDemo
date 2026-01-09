@@ -52,6 +52,15 @@ npm run dist
 - Security: this demo uses `nodeIntegration: true` for simplicity. For real apps, prefer a `preload.js` + IPC with `contextIsolation` enabled.
 - Cross-platform: electron-builder targets are configured for macOS (`dmg`) and Windows (`nsis`). Adjust as needed in `package.json`.
 
+## Changelog
+
+### 1.0.1
+- Added application menu with custom "About Electro Demo" and "Quit Electro Demo" labels
+- Menu actions for Increment, Decrement, Reset Counter, and Toggle Theme (with accelerators)
+- Theme preference persisted across launches
+- Window position/size/maximized state persisted between launches
+- Moved main/renderer logic under `scripts/` folder
+
 ## Next Steps (Ideas to Learn)
 - Add custom menu items that send events to the renderer (e.g., "Reset Counter" via IPC).
 - Introduce a `preload.js` and migrate to IPC for main/renderer communication.
