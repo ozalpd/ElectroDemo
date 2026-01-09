@@ -10,8 +10,17 @@ A minimal Electron desktop app created for learning purposes. This project shows
 
 ## Features
 - Counter with +/-/reset actions.
-- Light/dark theme toggle.
+- Light/dark theme toggle with persistence between launches.
+- Keyboard shortcuts: ↑ or + to increment, ↓ or - to decrement, R to reset.
 - Styles split into [style.css](style.css) for easy tweaking.
+
+## Usage
+- Run: `npm start`
+- Increment: Click "+1" or press ↑ or +
+- Decrement: Click "-1" or press ↓ or -
+- Reset: Click "Reset" or press R
+- Toggle theme: Click the Light/Dark button; preference persists across launches
+- Tip: Ensure the app window is focused for keyboard shortcuts to work
 
 ## Quick Start
 ```bash
@@ -31,10 +40,11 @@ npm run dist
 - On Windows: outputs an NSIS installer inside `dist/`
 
 ## App Structure
-- [main.js](main.js): Electron main process. Creates an `800x600` `BrowserWindow` and loads [index.html](index.html).
+- [scripts/main.js](scripts/main.js): Electron main process. Creates an `800x600` `BrowserWindow` and loads [index.html](index.html).
 - [index.html](index.html): Renderer content with counter UI and theme toggle.
 - [style.css](style.css): Styling for counter and themes.
-- [package.json](package.json): Scripts and electron-builder config (see `build` section).
+- [scripts/counter.js](scripts/counter.js): Renderer logic (counter, keyboard shortcuts, theme persistence).
+- [package.json](package.json): Scripts and electron-builder config (see `build` section). `main` points to `scripts/main.js`.
 
 ## Notes
 - Security: this demo uses `nodeIntegration: true` for simplicity. For real apps, prefer a `preload.js` + IPC with `contextIsolation` enabled.
