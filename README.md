@@ -4,8 +4,14 @@ A minimal Electron desktop app created for learning purposes. This project shows
 
 ## Overview
 - Main process creates a single window and loads a static HTML page.
+- Renderer shows a counter UI with increment/decrement/reset and a light/dark toggle.
 - Uses electron-builder to generate installers (`.dmg` on macOS, NSIS on Windows).
 - Kept intentionally simple so you can focus on Electron basics.
+
+## Features
+- Counter with +/-/reset actions.
+- Light/dark theme toggle.
+- Styles split into [style.css](style.css) for easy tweaking.
 
 ## Quick Start
 ```bash
@@ -25,8 +31,9 @@ npm run dist
 - On Windows: outputs an NSIS installer inside `dist/`
 
 ## App Structure
-- [main.js](main.js): Electron main process. Creates an `800x600` `BrowserWindow` and loads `index.html`.
-- [index.html](index.html): Renderer content (static HTML) shown in the window.
+- [main.js](main.js): Electron main process. Creates an `800x600` `BrowserWindow` and loads [index.html](index.html).
+- [index.html](index.html): Renderer content with counter UI and theme toggle.
+- [style.css](style.css): Styling for counter and themes.
 - [package.json](package.json): Scripts and electron-builder config (see `build` section).
 
 ## Notes
@@ -34,7 +41,7 @@ npm run dist
 - Cross-platform: electron-builder targets are configured for macOS (`dmg`) and Windows (`nsis`). Adjust as needed in `package.json`.
 
 ## Next Steps (Ideas to Learn)
-- Add a simple counter UI in `index.html`.
-- Create a custom menu in the main process.
+- Add a custom menu in the main process.
 - Introduce a `preload.js` and migrate to IPC for main/renderer communication.
 - Save/load a file via the main process (Node.js `fs`).
+- Persist the theme or counter value between runs.

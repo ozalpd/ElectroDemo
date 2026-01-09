@@ -1,0 +1,128 @@
+:root {
+  --bg: #0f172a;
+  --text: #e2e8f0;
+  --card: #1e293b;
+  --button-text: #0f172a;
+  --primary: #38bdf8;
+  --primary-shadow: rgba(56, 189, 248, 0.3);
+  --accent: #fbbf24;
+  --accent-shadow: rgba(251, 191, 36, 0.35);
+  --danger: #f472b6;
+  --danger-shadow: rgba(244, 114, 182, 0.35);
+  --ghost: #334155;
+  --ghost-text: #e2e8f0;
+  --ghost-border: #475569;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  margin: 0;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.card {
+  background: var(--card);
+  padding: 24px 28px;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  text-align: center;
+  width: 320px;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.toolbar {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 10px;
+}
+
+h1 {
+  margin: 0 0 12px;
+  font-size: 22px;
+  letter-spacing: 0.4px;
+}
+
+.value {
+  font-size: 48px;
+  margin: 12px 0 20px;
+  font-weight: 700;
+}
+
+.buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+button {
+  flex: 1;
+  padding: 12px 0;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.1s ease, box-shadow 0.2s ease, background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  color: var(--button-text);
+  background: var(--primary);
+  box-shadow: 0 8px 20px var(--primary-shadow);
+}
+
+button:hover {
+  transform: translateY(-1px);
+}
+
+button:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+button.reset {
+  background: var(--accent);
+  box-shadow: 0 8px 20px var(--accent-shadow);
+}
+
+button.decrement {
+  background: var(--danger);
+  box-shadow: 0 8px 20px var(--danger-shadow);
+}
+
+button.ghost {
+  flex: 0;
+  padding: 8px 12px;
+  background: var(--ghost);
+  color: var(--ghost-text);
+  border: 1px solid var(--ghost-border);
+  box-shadow: none;
+}
+
+button.ghost:hover {
+  transform: translateY(-1px);
+  background: var(--ghost-border);
+}
+
+button.ghost:active {
+  transform: translateY(0);
+}
+
+.light {
+  --bg: #f8fafc;
+  --text: #0f172a;
+  --card: #ffffff;
+  --button-text: #0b1220;
+  --primary: #2563eb;
+  --primary-shadow: rgba(37, 99, 235, 0.25);
+  --accent: #f59e0b;
+  --accent-shadow: rgba(245, 158, 11, 0.25);
+  --danger: #e11d48;
+  --danger-shadow: rgba(225, 29, 72, 0.22);
+  --ghost: #e2e8f0;
+  --ghost-text: #0f172a;
+  --ghost-border: #cbd5e1;
+}

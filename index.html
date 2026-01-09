@@ -1,9 +1,61 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>An Electron Demo App</title>
+  <title>Electron Demo Counter</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Hello Electron!</h1>
+  <div class="card">
+    <div class="toolbar">
+      <button class="ghost" id="theme-toggle">Light mode</button>
+    </div>
+    <h1>Simple Counter</h1>
+    <div class="value" id="count">0</div>
+    <div class="buttons">
+      <button class="decrement" id="decrement">-1</button>
+      <button id="increment">+1</button>
+      <button class="reset" id="reset">Reset</button>
+    </div>
+  </div>
+
+  <script>
+    // Basic counter logic in the renderer
+    const countEl = document.getElementById('count');
+    let value = 0;
+
+    const update = () => {
+      countEl.textContent = value;
+    };
+
+    document.getElementById('increment').addEventListener('click', () => {
+      value += 1;
+      update();
+    });
+
+    document.getElementById('decrement').addEventListener('click', () => {
+      value -= 1;
+      update();
+    });
+
+    document.getElementById('reset').addEventListener('click', () => {
+      value = 0;
+      update();
+    });
+
+    update();
+
+    // Light/dark theme toggle
+    const themeToggle = document.getElementById('theme-toggle');
+    const updateThemeLabel = () => {
+      themeToggle.textContent = document.body.classList.contains('light') ? 'Dark mode' : 'Light mode';
+    };
+
+    themeToggle.addEventListener('click', () => {
+      document.body.classList.toggle('light');
+      updateThemeLabel();
+    });
+
+    updateThemeLabel();
+  </script>
 </body>
 </html>

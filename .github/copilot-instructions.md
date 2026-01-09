@@ -6,8 +6,9 @@ ElectroDemo is a minimal Electron desktop application demonstrating basic Electr
 ## Architecture & Key Files
 
 ### Entry Point
-- **[main.js](../../main.js)**: Electron main process. Creates a 800x600 BrowserWindow on app ready, loads `index.html`. Uses `nodeIntegration: true` for backward compatibility.
-- **[index.html](../../index.html)**: Renderer process UI. Simple static HTML file loaded into the window.
+- [main.js](../../main.js): Electron main process. Creates an 800x600 BrowserWindow on app ready, loads [index.html](../../index.html). Uses nodeIntegration: true for backward compatibility (migrate to preload + IPC for production).
+- [index.html](../../index.html): Renderer UI with counter (increment/decrement/reset) and light/dark toggle; pulls styles from [style.css](../../style.css).
+- [style.css](../../style.css): Theming via CSS variables; supports light/dark modes.
 
 ## Developer Workflows
 
@@ -31,11 +32,11 @@ See [package.json](../../package.json) `build` section:
    - `electron`: Desktop framework runtime
    - `electron-builder`: Packaging tool (dev only)
 
-3. **No additional features present**: This is a bare-bones template. Any new functionality (menus, windows, IPC) should follow standard Electron patterns.
+3. **UI features present**: Counter UI and theme toggle live in renderer; styles in style.css. No IPC or preload yet.
 
 ## When Modifying
 
-- **Adding features**: Keep main.js minimal; use preload + IPC for renderer-main communication.
-- **UI changes**: Edit index.html or add CSS/JS assets (note: nothing currently exists).
-- **Packaging**: Modify `build` config in package.json for new platforms/signing.
-- **Security**: Never enable `nodeIntegration` in production; use context isolation + preload scripts.
+- **Adding features**: Keep main.js minimal; use preload + IPC for renderer-main communication when adding main/renderer interactions.
+- **UI changes**: Edit index.html and style.css; counter logic is inline script in index.html.
+- **Packaging**: Modify build config in package.json for new platforms/signing.
+- **Security**: Never enable nodeIntegration in production; use context isolation + preload scripts.
