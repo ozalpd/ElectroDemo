@@ -16,9 +16,21 @@ Thumbs.db
 # IDE / Editor
 .vscode/
 .idea/
+.vs/
 *.swp
 *.swo
 *~
+*.user
+*.userprefs
+*.sln.docstates
+
+# Visual Studio
+bin/
+obj/
+.vs/
+.vscode/
+*.suo
+*.sln.docstates
 
 # Environment variables
 .env
