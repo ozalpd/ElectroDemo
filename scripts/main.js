@@ -8,16 +8,44 @@ const fs = require('fs');
 const stateFilePath = path.join(app.getPath('userData'), 'window-state.json');
 
 function loadWindowState() {
+  const { screen } = require('electron');
+  const primaryDisplay = screen.getPrimaryDisplay();
+  const { width: screenWidth, height: screenHeight } = primaryDisplay.workAreaSize;
+  const minWidth = 420;
+  const minHeight = 512;
   try {
     const data = fs.readFileSync(stateFilePath, 'utf-8');
-    return JSON.parse(data);
+    return parsePosition(data);
   } catch (err) {
-    // Return default state if file doesn't exist or is invalid
+    return defaultPosition();
+  }
+  function parsePosition(data) {
+    let savedPosition = JSON.parse(data);
+
+    savedPosition.width = savedPosition.width > screenWidth ? screenWidth : savedPosition.width;
+    savedPosition.width = savedPosition.width < minWidth ? minWidth : savedPosition.width;
+    if (savedPosition.width + savedPosition.x > screenWidth) {
+      savedPosition.x = screenWidth - savedPosition.width;
+    }
+
+    savedPosition.height = savedPosition.height > screenHeight ? screenHeight : savedPosition.height;
+    savedPosition.height = savedPosition.height < minHeight ? minHeight : savedPosition.height;
+    if (savedPosition.height + savedPosition.y > screenHeight) {
+      savedPosition.y = screenHeight - savedPosition.height;
+    }
+
+    savedPosition.x = savedPosition.x < 0 || savedPosition.x > screenWidth ? 0 : savedPosition.x;
+    savedPosition.y = savedPosition.y < 0 || savedPosition.y > screenHeight ? 0 : savedPosition.y;
+
+    return savedPosition;
+  }
+  function defaultPosition() {
+    let defWidth = Math.floor(minWidth * 1.25);
     return {
-      width: 800,
-      height: 600,
-      x: undefined,
-      y: undefined,
+      width: defWidth,
+      height: minHeight,
+      x: Math.floor((screenWidth - defWidth) / 2),
+      y: Math.floor((screenHeight - minHeight) / 2),
       isMaximized: false
     };
   }
