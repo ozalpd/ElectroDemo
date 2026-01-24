@@ -1,11 +1,12 @@
 # ElectroDemo
 
-A minimal Electron desktop app created for learning purposes. This project shows a tiny but complete setup you can run and package on macOS and Windows.
+A minimal Electron desktop app created for learning purposes. This project shows a tiny but complete setup you can run and package on macOS and Windows, written in TypeScript for type safety.
 
 ## Overview
 - Main process creates a single window and loads a static HTML page.
 - Renderer shows a counter UI with increment/decrement/reset and a light/dark toggle.
 - Uses electron-builder to generate installers (`.dmg` on macOS, NSIS on Windows).
+- Written in TypeScript for the main process, providing better type safety and IDE support.
 - Kept intentionally simple so you can focus on Electron basics.
 
 ## Features
@@ -13,6 +14,8 @@ A minimal Electron desktop app created for learning purposes. This project shows
 - Light/dark theme toggle with persistence between launches.
 - Keyboard shortcuts: ↑ or + to increment, ↓ or - to decrement, R to reset.
 - Application menu with File, Edit, View, and Help menus (File → Quit Electro Demo, Help → About).
+- Window state persistence (size, position, maximized state).
+- TypeScript main process for type safety.
 - Styles split into [style.css](style.css) for easy tweaking.
 
 ## Usage
@@ -28,7 +31,10 @@ A minimal Electron desktop app created for learning purposes. This project shows
 # Install dependencies
 npm install
 
-# Run the app in development
+# Build TypeScript files
+npm run build
+
+# Run the app in development (builds automatically)
 npm start
 ```
 
@@ -41,20 +47,23 @@ npm run dist
 - On Windows: outputs an NSIS installer inside `dist/`
 
 ## App Structure
-- [scripts/main.js](scripts/main.js): Electron main process. Creates an `800x600` `BrowserWindow` and loads [index.html](index.html); initializes the app menu.
-- [scripts/menu.js](scripts/menu.js): Builds and sets the application menu (File, Edit, View, Help with platform-specific behavior).
+- [scripts/main.ts](scripts/main.ts): Electron main process (TypeScript). Creates a BrowserWindow, loads [index.html](index.html), initializes the app menu, and manages window state persistence. Compiles to `dist/scripts/main.js`.
+- [scripts/menu.ts](scripts/menu.ts): Builds and sets the application menu (File, Edit, View, Help with platform-specific behavior). Compiles to `dist/scripts/menu.js`.
+- [tsconfig.json](tsconfig.json): TypeScript configuration (ES2022, CommonJS, strict mode).
 - [index.html](index.html): Renderer content with counter UI and theme toggle.
 - [style.css](style.css): Styling for counter and themes.
-- [scripts/counter.js](scripts/counter.js): Renderer logic (counter, keyboard shortcuts, theme persistence).
-- [package.json](package.json): Scripts and electron-builder config (see `build` section). `main` points to `scripts/main.js`.
+- [scripts/counter.js](scripts/counter.js): Renderer logic (counter, keyboard shortcuts, theme persistence, IPC listeners).
+- [package.json](package.json): Scripts and electron-builder config (see `build` section). `main` points to `dist/scripts/main.js` (compiled output).
 
 ## Notes
-- Security: this demo uses `nodeIntegration: true` for simplicity. For real apps, prefer a `preload.js` + IPC with `contextIsolation` enabled.
-- Cross-platform: electron-builder targets are configured for macOS (`dmg`) and Windows (`nsis`). Adjust as needed in `package.json`.
+- **TypeScript**: Main process code is written in TypeScript (`scripts/*.ts`) and compiles to JavaScript in `dist/`. The renderer (`counter.js`) remains JavaScript for simplicity.
+- **Security**: This demo uses `nodeIntegration: true` for simplicity. For real apps, prefer a `preload.js` + IPC with `contextIsolation` enabled.
+- **Cross-platform**: electron-builder targets are configured for macOS (`dmg`) and Windows (`nsis`). Adjust as needed in `package.json`.
 
 ## Changelog
 
 ### 1.0.1
+- Migrated main process to TypeScript for type safety
 - Added application menu with custom "About Electro Demo" and "Quit Electro Demo" labels
 - Menu actions for Increment, Decrement, Reset Counter, and Toggle Theme (with accelerators)
 - Theme preference persisted across launches
@@ -62,7 +71,7 @@ npm run dist
 - Moved main/renderer logic under `scripts/` folder
 
 ## Next Steps (Ideas to Learn)
-- Add custom menu items that send events to the renderer (e.g., "Reset Counter" via IPC).
-- Introduce a `preload.js` and migrate to IPC for main/renderer communication.
-- Save/load a file via the main process (Node.js `fs`).
-- Add app window state persistence (position, size).
+- Migrate renderer code (`counter.js`) to TypeScript
+- Introduce a `preload.ts` and migrate to contextIsolation + IPC for improved security
+- Save/load a file via the main process (Node.js `fs`)
+- Add automatic updates using electron-updater
